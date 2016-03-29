@@ -204,7 +204,7 @@ class NeuralNetwork():
 
 	def loadWeights(self):
 		file_ = raw_input("Enter name of weights file: ")
-		file_ = open(file_,"r")
+		file_ = open(file_+".data","r")
 		weights = []
 		for weight in file_:
 			weights.append(float(weight))
@@ -247,7 +247,7 @@ class NeuralNetwork():
 			trial += 1
 
 	def saveWeights(self):
-		weights = open("weights.data","w")
+                weights = open(raw_input("Enter name for data: ")+".data","w")
 		for node in self.inputLayer:
 			for connection in node.hiddenConnections:
 				weights.write(str(connection))
