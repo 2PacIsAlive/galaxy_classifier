@@ -120,7 +120,7 @@ class NeuralNetwork():
 		return max(layerActivity, key = lambda x: x[1])
 
 	def checkMinusPhaseOutput(self,Galaxy,minusPhaseOutput):
-		expected = self.getExpected(minusPhaseOutput[0],Galaxy)
+		#expected = self.getExpected(minusPhaseOutput[0],Galaxy)
 		glxy = self.getGalaxy(minusPhaseOutput[0])
 		#if minusPhaseOutput[0] == self.outputLayer[0]:
 		#	glxy = "a_f"
@@ -225,12 +225,17 @@ class NeuralNetwork():
 				weights.pop(0)
 
 	def train(self):
-		self.epochError = 0
+                self.epochError = 0
                 self.trainingEpoch()
                 self.epochs += 1
-                print "Epoch:", self.epochs, "Error:", 100 * float(self.epochError)/float(len(self.outputLayer))
+                print "Epoch:", self.epochs, "Error:", float(self.epochError) / float(len(galaxies.inputActivations))
                 #print self.epochError
-                return self.train()
+                '''
+                if self.epochError > 1:
+                    return self.train()
+                else:
+                    return
+                '''
 
 	def test(self):
 		trial = 0
@@ -323,13 +328,14 @@ def main():
 	try:
 		#net.test()
 		print "beginning training...\n"
-		net.train()
+                for i in range(int(sys.argv[1])):
+                    net.train()
 		print "Success!"
 		print "Error across 100 epochs: ", net.epochError
 		print "Epochs to convergence:", net.epochs
 		#print net.stateList
-	except:
-		print "training failed"
+        except Exception as e:
+		print "training failed because of "+str(e)
 	print "testing network...\n"
 	net.test()
 	#if raw_input("Would you like to save the network's weights? (y/n) ") == "y":
