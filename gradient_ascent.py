@@ -35,7 +35,7 @@ class NeuralNetwork():
 		self.hiddenLayer = []
                 self.outputLayer = []
 		self.epochError  = 0
-		self.epochs      = 0
+		self.epochs      = 18076
 
 	def makeNetwork(self, input_size, hidden_size, output_size):
 		for input_node in range(input_size):

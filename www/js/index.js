@@ -13,7 +13,7 @@ function compare(a,b) {
     else 
         return 0 
 };
-
+/*
 err.once("value", function(snapshot) {
     var obj = snapshot.val();
     var data = Object.keys(obj).map(function (key) {return obj[key]});
@@ -41,3 +41,42 @@ err.once("value", function(snapshot) {
     config.element = 'curr-err';
     Morris.Area(config);
 });
+*/
+
+function renderLiveGraph() {
+    console.log('rendering...');
+    var mainGraph;
+    mainGraph = Morris.Area({
+        element: 'curr_err',
+        data: data,
+        xkey: 'epoch',
+        ykeys: ['err'],
+        lineColors: ['red'],
+        labels: ['Error'],
+        pointSize: 0,
+        resize: true,
+        parseTime: false,
+        pointFillColors:['#ffffff'],
+        pointStrokeColors: ['black'],
+        behaveLikeLine: true,
+        fillOpacity: 0.6,
+        hideHover: 'auto' 
+        });
+}
+
+err.on("value", function(snapshot) {
+    console.log('updating...');
+    var obj = snapshot.val();
+    data = Object.keys(obj).map(function (key) {return obj[key]});
+    var flattened = [];
+    for (var i=0; i<data.length; i++) {
+        flattened = flattened.concat(data[i]['err']);
+    }
+    var max = Math.max.apply(Math,flattened) + 2,
+        min = Math.min.apply(Math,flattened) - 2; 
+    mainGraph.setData(data.sort(compare));
+});
+
+renderLiveGraph();
+
+
