@@ -9,8 +9,6 @@ import math
 import sys
 import os
 
-sys.setrecursionlimit(1000000) # maximum of 1 million epochs alloted for training
-
 class Neuron():
 	def __init__(self):
 		self.act = None
@@ -23,12 +21,8 @@ class NeuralNetwork():
 		self.inputLayer = []
 		self.hiddenLayer = []
 		self.outputLayer = []
-		self.inputActivations = []
-		self.hiddenActivations = []
-		self.outputActivations = []
 		self.epochError = 0
 		self.epochs = 0
-		self.stateList = []
 
 	def makeNetwork(self, input_size, hidden_size, output_size):
 		for input_node in range(input_size):
@@ -95,9 +89,6 @@ class NeuralNetwork():
 			output = self.minusPhase(Galaxy)
 			if self.plusPhase(Galaxy,output) == False:
 				self.epochError += 1
-				#self.stateList.append(False)
-			#else:
-				#self.stateList.append(True)
 
 	def minusPhase(self,Galaxy):
 		#FORWARD
@@ -239,7 +230,7 @@ class NeuralNetwork():
 
 	def test(self):
 		trial = 0
-		for activation, Galaxy in self.inputActivations:
+		for activation, Galaxy in galaxies.inputActivations:
 			print "\nTrial: ", trial
 			print "Galaxy: ", Galaxy[:-2]
 			print "Gender: ", Galaxy[-1:]
@@ -281,38 +272,6 @@ class NeuralNetwork():
 			rf.close()
 			rf_counter += 1
 
-def loadTrainingData():
-    print "\nloading training data..."
-    classifications = pandas.read_csv('solutions.csv')
-    # currently only trying to discern whether the galaxy is:
-        # 1.1) smooth
-        # 1.2) having features/disk
-        # 1.3) star/artifact
-    classifications.drop(classifications.columns[4:38], axis=1, inplace=True) # get rid of all other classifications
-    for file_ in glob.glob("training_images/*"):
-        print file_, "loaded"
-        galaxy     = Image.open(file_)
-        pix        = list(galaxy.getdata())
-        activation = []
-        for pixel in pix:
-            hexval = hex(pixel[0]) + hex(pixel[1])[:1] + hex(pixel[2])[:1]
-            activation.append((int(hexval,16))/100000.0)
-        self.input_training_matrix.append(activation)
-        galaxy_id = int(file_[16:-4])
-        df_row    = classifications[classifications.GalaxyID == galaxy_id]
-        smooth    = df_row["Class1.1"] # probability that the galaxy is smooth
-        feat_disk = df_row["Class1.2"] # probability that the galaxy has features/disk
-        star      = df_row["Class1.3"] # probability that the image is a star or artifact
-        if max([float(smooth), float(feat_disk), float(star)]) == float(smooth): # currently trying to detect smooth galaxies
-            print "smooth"
-            self.output_training_matrix.append([0])
-        else:
-            self.output_training_matrix.append([1])
-    self.training_size = len(self.input_training_matrix)
-    print self.training_size
-    self.input_training_matrix = np.array(self.input_training_matrix)
-    self.output_training_matrix = np.array(self.output_training_matrix)
-
 def main():
 	net.makeNetwork(
                         len(galaxies.inputActivations[0]), # input size
@@ -329,11 +288,13 @@ def main():
 		#net.test()
 		print "beginning training...\n"
                 for i in range(int(sys.argv[1])):
-                    net.train()
+                    try:
+                        net.train()
+                    except KeyboardInterrupt:
+                        break
 		print "Success!"
 		print "Error across 100 epochs: ", net.epochError
 		print "Epochs to convergence:", net.epochs
-		#print net.stateList
         except Exception as e:
 		print "training failed because of "+str(e)
 	print "testing network...\n"
