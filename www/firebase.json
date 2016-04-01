@@ -1,0 +1,9 @@
+{
+  "firebase": "galaxy-classifier",
+  "public": ".",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}

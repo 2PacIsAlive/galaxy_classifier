@@ -1,0 +1,88 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'Morris' ]
+2 info using npm@3.8.1
+3 info using node@v0.10.20
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readLocalPackageData
+7 silly fetchPackageMetaData Morris
+8 silly fetchNamedPackageData Morris
+9 silly mapToRegistry name Morris
+10 silly mapToRegistry using default registry
+11 silly mapToRegistry registry https://registry.npmjs.org/
+12 silly mapToRegistry uri https://registry.npmjs.org/Morris
+13 verbose request uri https://registry.npmjs.org/Morris
+14 verbose request no auth needed
+15 info attempt registry request try #1 at 23:55:28
+16 verbose request id 3bec9e8a6ecca733
+17 http request GET https://registry.npmjs.org/Morris
+18 http 404 https://registry.npmjs.org/Morris
+19 verbose headers { 'content-type': 'application/json',
+19 verbose headers   'cache-control': 'max-age=0',
+19 verbose headers   'content-length': '2',
+19 verbose headers   'accept-ranges': 'bytes',
+19 verbose headers   date: 'Fri, 01 Apr 2016 05:55:29 GMT',
+19 verbose headers   via: '1.1 varnish',
+19 verbose headers   age: '0',
+19 verbose headers   connection: 'keep-alive',
+19 verbose headers   'x-served-by': 'cache-dfw1840-DFW',
+19 verbose headers   'x-cache': 'MISS',
+19 verbose headers   'x-cache-hits': '0',
+19 verbose headers   'x-timer': 'S1459490129.037998,VS0,VE55' }
+20 silly get cb [ 404,
+20 silly get   { 'content-type': 'application/json',
+20 silly get     'cache-control': 'max-age=0',
+20 silly get     'content-length': '2',
+20 silly get     'accept-ranges': 'bytes',
+20 silly get     date: 'Fri, 01 Apr 2016 05:55:29 GMT',
+20 silly get     via: '1.1 varnish',
+20 silly get     age: '0',
+20 silly get     connection: 'keep-alive',
+20 silly get     'x-served-by': 'cache-dfw1840-DFW',
+20 silly get     'x-cache': 'MISS',
+20 silly get     'x-cache-hits': '0',
+20 silly get     'x-timer': 'S1459490129.037998,VS0,VE55' } ]
+21 silly fetchPackageMetaData Error: Registry returned 404 for GET on https://registry.npmjs.org/Morris
+21 silly fetchPackageMetaData     at makeError (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:264:12)
+21 silly fetchPackageMetaData     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:242:14)
+21 silly fetchPackageMetaData     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:172:14)
+21 silly fetchPackageMetaData     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:199:22)
+21 silly fetchPackageMetaData     at Request.EventEmitter.emit (events.js:98:17)
+21 silly fetchPackageMetaData     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1036:10)
+21 silly fetchPackageMetaData     at Request.EventEmitter.emit (events.js:117:20)
+21 silly fetchPackageMetaData     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:963:12)
+21 silly fetchPackageMetaData     at IncomingMessage.EventEmitter.emit (events.js:117:20)
+21 silly fetchPackageMetaData     at _stream_readable.js:920:16
+21 silly fetchPackageMetaData  error for Morris { [Error: Registry returned 404 for GET on https://registry.npmjs.org/Morris] pkgid: 'Morris', statusCode: 404, code: 'E404' }
+22 silly rollbackFailedOptional Starting
+23 silly rollbackFailedOptional Finishing
+24 silly runTopLevelLifecycles Starting
+25 silly runTopLevelLifecycles Finishing
+26 silly install printInstalled
+27 verbose stack Error: Registry returned 404 for GET on https://registry.npmjs.org/Morris
+27 verbose stack     at makeError (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:264:12)
+27 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:242:14)
+27 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:172:14)
+27 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:199:22)
+27 verbose stack     at Request.EventEmitter.emit (events.js:98:17)
+27 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1036:10)
+27 verbose stack     at Request.EventEmitter.emit (events.js:117:20)
+27 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:963:12)
+27 verbose stack     at IncomingMessage.EventEmitter.emit (events.js:117:20)
+27 verbose stack     at _stream_readable.js:920:16
+28 verbose statusCode 404
+29 verbose pkgid Morris
+30 verbose cwd /Users/jjolton/galaxy_classifier/www
+31 error Darwin 15.0.0
+32 error argv "node" "/usr/local/bin/npm" "install" "Morris"
+33 error node v0.10.20
+34 error npm  v3.8.1
+35 error code E404
+36 error 404 Registry returned 404 for GET on https://registry.npmjs.org/Morris
+37 error 404
+38 error 404 'Morris' is not in the npm registry.
+39 error 404 Your package name is not valid, because
+40 error 404 1. name can no longer contain capital letters
+41 error 404 Note that you can also install from a
+42 error 404 tarball, folder, http url, or git url.
+43 verbose exit [ 1, true ]
