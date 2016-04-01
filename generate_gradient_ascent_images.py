@@ -4,6 +4,7 @@ from PIL  import Image
 from glob import glob
 from matplotlib.colors import rgb2hex
 import json
+import os
 
 class Generator:
     def __init__(self):
@@ -29,6 +30,10 @@ class Generator:
                         pixels[i,j] = self.getHexValue(gradient_ascent_image[counter])
                         counter += 1
             img.save('layer_images/png/' + file_[28:-5]+'.png','png')
+        os.system('convert gradient_ascent_images/png/*.png animations/gradient_ascent_test.mpeg')
+        os.system('convert layer_images/png/*.png           animations/hidden_unit_0.mpeg')
+        os.system('open animations/gradient_ascent_test.mpeg')
+        os.system('open animations/hidden_unit_0.mpeg')
 
     def getHexValue(self, value):
         v = str(int(value * 100000))
@@ -37,4 +42,3 @@ class Generator:
         return int(v[:2], 16), int(v[2:4], 16), int(v[4:6], 16)
 
 
-g = Generator()

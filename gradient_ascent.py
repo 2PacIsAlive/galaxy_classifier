@@ -1,5 +1,7 @@
 #usr/bin/env python
 
+from firebase.firebase import FirebaseApplication, FirebaseAuthentication
+from generate_gradient_ascent_images import Generator
 from galaxy_loader import Galaxies
 from PIL import Image
 import random
@@ -18,6 +20,10 @@ class Neuron():
 		self.outputConnections = []
 
 class NeuralNetwork():
+
+        authentication = FirebaseAuthentication('zSLMGZaEXRrxLB7kvYP86ZXavdVPiNR55QTJnt4O', 'jared.jolton@gmail.com', True, True)
+        firebase       = FirebaseApplication('https://galaxy-classifier.firebaseio.com', authentication)
+
 	def __init__(self):
                 self.genImgs = False
                 if sys.argv[2] == '1':
@@ -194,7 +200,10 @@ class NeuralNetwork():
                 self.epochError = 0
                 self.trainingEpoch()
                 self.epochs += 1
-                print "Epoch:", self.epochs, "Error:", float(self.epochError) / float(len(galaxies.inputActivations))
+                error = float(self.epochError) / float(len(galaxies.inputActivations))
+                print "Epoch:", self.epochs, "Error:", error
+                if self.epochs % 25 == 0:
+                    self.firebase.post('/error', {'epoch': self.epochs, 'err': error})
 
 	def test(self):
 		trial = 0
@@ -283,6 +292,9 @@ def main():
 	print "weights saved\n"
 	net.saveRFs()
         print "receptive fields saved\n"
+        print "generating images..."
+        if net.genImgs:
+            Generator()
 
 if __name__=="__main__":
     galaxies = Galaxies()
