@@ -18,6 +18,17 @@ class Generator:
                         pixels[i,j] = self.getHexValue(gradient_ascent_image[counter])
                         counter += 1
             img.save('gradient_ascent_images/png/' + file_[28:-5]+'.png','png')
+        for file_ in glob('layer_images/json/*'):
+            img = Image.new( 'RGB', (5,5), "black")
+            pixels = img.load()
+            counter = 0
+            with open(file_, 'r') as gradient_ascent_image:
+                gradient_ascent_image = json.load(gradient_ascent_image)
+                for i in range(img.size[0]):
+                    for j in range(img.size[1]):
+                        pixels[i,j] = self.getHexValue(gradient_ascent_image[counter])
+                        counter += 1
+            img.save('layer_images/png/' + file_[28:-5]+'.png','png')
 
     def getHexValue(self, value):
         v = str(int(value * 100000))

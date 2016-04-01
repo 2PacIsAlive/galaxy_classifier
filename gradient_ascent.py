@@ -19,12 +19,15 @@ class Neuron():
 
 class NeuralNetwork():
 	def __init__(self):
+                self.genImgs = False
+                if sys.argv[2] == '1':
+                    self.genImgs  = True
+		self.alpha    = float(sys.argv[3])
+		self.interval = int(sys.argv[4])
 		self.newPixels   = dict()
-		self.alpha       = float(sys.argv[2])
-		self.interval    = int(sys.argv[3])
-		self.inputLayer  = []
+                self.inputLayer  = []
 		self.hiddenLayer = []
-		self.outputLayer = []
+                self.outputLayer = []
 		self.epochError  = 0
 		self.epochs      = 0
 
@@ -82,8 +85,9 @@ class NeuralNetwork():
 			output = self.minusPhase(Galaxy)
 			if self.plusPhase(Galaxy,output) == False:
 				self.epochError += 1
-		if self.epochs % self.interval == 0:
-			self.saveNewPixels()
+                if self.genImgs:
+                    if self.epochs % self.interval == 0:
+    			self.saveNewPixels()
 
 	def minusPhase(self,Galaxy):
 		#FORWARD
@@ -236,16 +240,20 @@ class NeuralNetwork():
 			rf_counter += 1
 
 	def setupGradientAscent(self):
-		self.newPixels = {  'smooth':     random.choice([example[0] for example in galaxies.inputActivations if example[1] == 'smooth']),    # pick a random smooth galaxy image to start
-							'not_smooth': random.choice([example[0] for example in galaxies.inputActivations if example[1] == 'not_smooth']) # pick a random not_smooth galaxy image to start
-						 }
+		self.newPixels = {  
+                                    'smooth':     random.choice([example[0] for example in galaxies.inputActivations if example[1] == 'smooth']),    # pick a random smooth galaxy image to start
+				    'not_smooth': random.choice([example[0] for example in galaxies.inputActivations if example[1] == 'not_smooth']) # pick a random not_smooth galaxy image to start
+		    		 }
 
 	def saveNewPixels(self):
 		with open('gradient_ascent_images/json/smooth_new_pixels_' + str(self.epochs)     + '.json', 'w') as new_smooth:
 			json.dump(self.newPixels['smooth'], new_smooth)
 		with open('gradient_ascent_images/json/not_smooth_new_pixels_' + str(self.epochs) + '.json', 'w') as new_not_smooth:
 			json.dump(self.newPixels['not_smooth'], new_not_smooth)
-		print 'gradient ascent images saved for epoch ' + str(self.epochs)
+	    	with open('layer_images/json/hidden_weights_' + str(self.epochs) + '.json', 'w') as hidden_weights_file:
+			json.dump(self.inputLayer[0].hiddenConnections, hidden_weights_file)
+	
+                print 'images saved for epoch ' + str(self.epochs)
 
 def main():
 	net.makeNetwork(
